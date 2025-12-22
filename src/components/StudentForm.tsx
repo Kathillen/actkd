@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import {
   Select,
   SelectContent,
@@ -11,7 +12,7 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { UserPlus } from "lucide-react";
-import { Student, BELT_LEVELS } from "@/types/student";
+import { Student, BELT_LEVELS, BLOOD_TYPES } from "@/types/student";
 import { useToast } from "@/hooks/use-toast";
 
 interface StudentFormProps {
@@ -24,8 +25,10 @@ const StudentForm = ({ onAddStudent }: StudentFormProps) => {
     name: "",
     age: "",
     belt: "",
+    bloodType: "",
     phone: "",
-    email: "",
+    observations: "",
+    address: "",
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -44,8 +47,10 @@ const StudentForm = ({ onAddStudent }: StudentFormProps) => {
       name: formData.name.trim(),
       age: parseInt(formData.age),
       belt: formData.belt,
+      bloodType: formData.bloodType,
       phone: formData.phone.trim(),
-      email: formData.email.trim(),
+      observations: formData.observations.trim(),
+      address: formData.address.trim(),
       enrollmentDate: new Date().toISOString().split("T")[0],
     };
 
@@ -55,8 +60,10 @@ const StudentForm = ({ onAddStudent }: StudentFormProps) => {
       name: "",
       age: "",
       belt: "",
+      bloodType: "",
       phone: "",
-      email: "",
+      observations: "",
+      address: "",
     });
 
     toast({
@@ -75,12 +82,12 @@ const StudentForm = ({ onAddStudent }: StudentFormProps) => {
       </CardHeader>
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="space-y-2 sm:col-span-2 lg:col-span-1">
               <Label htmlFor="name">Nome Completo *</Label>
               <Input
                 id="name"
-                placeholder="Digite o nome do aluno"
+                placeholder="Digite o nome completo do aluno"
                 value={formData.name}
                 onChange={(e) =>
                   setFormData({ ...formData, name: e.target.value })
@@ -95,7 +102,7 @@ const StudentForm = ({ onAddStudent }: StudentFormProps) => {
                 type="number"
                 min="3"
                 max="100"
-                placeholder="Idade"
+                placeholder="Ex: 25"
                 value={formData.age}
                 onChange={(e) =>
                   setFormData({ ...formData, age: e.target.value })
@@ -125,7 +132,28 @@ const StudentForm = ({ onAddStudent }: StudentFormProps) => {
             </div>
 
             <div className="space-y-2">
-              <Label htmlFor="phone">Telefone</Label>
+              <Label htmlFor="bloodType">Tipo Sanguíneo</Label>
+              <Select
+                value={formData.bloodType}
+                onValueChange={(value) =>
+                  setFormData({ ...formData, bloodType: value })
+                }
+              >
+                <SelectTrigger id="bloodType">
+                  <SelectValue placeholder="Selecione o tipo" />
+                </SelectTrigger>
+                <SelectContent>
+                  {BLOOD_TYPES.map((type) => (
+                    <SelectItem key={type} value={type}>
+                      {type}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="phone">Número de Celular</Label>
               <Input
                 id="phone"
                 type="tel"
@@ -137,15 +165,27 @@ const StudentForm = ({ onAddStudent }: StudentFormProps) => {
               />
             </div>
 
-            <div className="space-y-2 sm:col-span-2">
-              <Label htmlFor="email">E-mail</Label>
+            <div className="space-y-2 sm:col-span-2 lg:col-span-3">
+              <Label htmlFor="address">Endereço Completo</Label>
               <Input
-                id="email"
-                type="email"
-                placeholder="email@exemplo.com"
-                value={formData.email}
+                id="address"
+                placeholder="Rua, número, bairro, cidade, estado"
+                value={formData.address}
                 onChange={(e) =>
-                  setFormData({ ...formData, email: e.target.value })
+                  setFormData({ ...formData, address: e.target.value })
+                }
+              />
+            </div>
+
+            <div className="space-y-2 sm:col-span-2 lg:col-span-3">
+              <Label htmlFor="observations">Observações</Label>
+              <Textarea
+                id="observations"
+                placeholder="Informações adicionais sobre o aluno (ex: restrições, medicamentos, etc.)"
+                value={formData.observations}
+                rows={3}
+                onChange={(e) =>
+                  setFormData({ ...formData, observations: e.target.value })
                 }
               />
             </div>

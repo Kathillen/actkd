@@ -3,8 +3,10 @@ export interface Student {
   name: string;
   age: number;
   belt: string;
+  bloodType: string;
   phone: string;
-  email: string;
+  observations: string;
+  address: string;
   enrollmentDate: string;
 }
 
@@ -24,3 +26,16 @@ export const BELT_LEVELS: BeltLevel[] = [
   "Vermelha",
   "Preta",
 ];
+
+export const BLOOD_TYPES = [
+  "A+",
+  "A-",
+  "B+",
+  "B-",
+  "AB+",
+  "AB-",
+  "O+",
+  "O-",
+] as const;
+
+export type BloodType = typeof BLOOD_TYPES[number];
