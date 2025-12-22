@@ -30,7 +30,7 @@ const Index = () => {
             </div>
             <div>
               <h1 className="text-lg font-bold leading-none">
-                Sistema de Alunos
+                Sistema de Cadastro de Alunos
               </h1>
               <span className="text-xs text-muted-foreground">Taekwondo</span>
             </div>
