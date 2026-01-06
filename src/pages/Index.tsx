@@ -1,5 +1,6 @@
 import StudentForm from "@/components/StudentForm";
 import StudentTable from "@/components/StudentTable";
+import UserBadge from "@/components/UserBadge";
 import { useStudents } from "@/hooks/useStudents";
 import { Swords } from "lucide-react";
 
@@ -22,6 +23,7 @@ const Index = () => {
               <span className="text-xs text-muted-foreground">Taekwondo</span>
             </div>
           </div>
+          <UserBadge />
         </div>
       </header>
 
